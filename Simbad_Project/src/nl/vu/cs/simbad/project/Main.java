@@ -21,10 +21,10 @@ public class Main {
         Robot robot3 = new Robot(new Vector3d(-2,  0, -2), "Robot-3");
         // Add robots into environment
 		environment.add(robot1);
-//		environment.add(robot2);
-//		environment.add(robot3);
+		environment.add(robot2);
+		environment.add(robot3);
 		
-		 
+		
  
         //Create instance of simbad simulator
       	Simbad frame = new Simbad(environment, false);

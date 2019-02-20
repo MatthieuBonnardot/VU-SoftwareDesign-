@@ -24,7 +24,7 @@ public class Main {
 		environment.add(robot2);
 		environment.add(robot3);
 		
-		
+		 
  
         //Create instance of simbad simulator
       	Simbad frame = new Simbad(environment, false);

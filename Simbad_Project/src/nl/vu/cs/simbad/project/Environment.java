@@ -14,10 +14,6 @@ import simbad.sim.Wall;
 
 public class Environment  extends EnvironmentDescription{
 	//Constructor
-	
-	public static final int WORLD_SIZE =  25;
-	
-	
 	public Environment() {
 		// turn on the lights
         this.light1IsOn = true;
@@ -30,28 +26,27 @@ public class Environment  extends EnvironmentDescription{
         this.showAxis(true);
         
         // Set the world size
-        this.setWorldSize(WORLD_SIZE);
-        
+        this.setWorldSize(25);
         
         
         
         Wall w1 = new Wall(new Vector3d(-12, 0, 0), 24, 2, this);
-        w1.setColor(new Color3f(Color.GRAY));
+        w1.setColor(new Color3f(Color.GREEN));
         w1.rotate90(1);
         add(w1);
         
         Wall w2 = new Wall(new Vector3d(12, 0, 0), 24, 2, this);
-        w2.setColor(new Color3f(Color.GRAY));
+        w2.setColor(new Color3f(Color.BLUE));
         w2.rotate90(1);
         add(w2);
         
         Wall w3 = new Wall(new Vector3d(0, 0, 12), 24, 2, this);
-        w3.setColor(new Color3f(Color.GRAY));
+        w3.setColor(new Color3f(Color.CYAN));
         //w1.rotate90(1);
         add(w3);
         
         Wall w4 = new Wall(new Vector3d(0, 0, -12), 24, 2, this);
-        w4.setColor(new Color3f(Color.GRAY));
+        w4.setColor(new Color3f(Color.RED));
         //w4.rotate90(1);
         add(w4);
         

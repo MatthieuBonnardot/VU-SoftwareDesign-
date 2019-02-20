@@ -15,7 +15,6 @@ public class Robot extends Agent {
 	RangeSensorBelt bumper;
 	CameraSensor camera;
 	
-	
 	double translationalVelocity = 0.5;
 	double rotationalVelocity = 0;
 	double rotationalVelocityFactor = Math.PI / 8;
@@ -29,6 +28,7 @@ public class Robot extends Agent {
         bumper = RobotFactory.addBumperBeltSensor(this, 8);
         // Add camera sensor
         camera = RobotFactory.addCameraSensor(this);
+        
         
        
 	}
@@ -66,18 +66,6 @@ public class Robot extends Agent {
 			
 		}
 	}
-	
-	private void rotate_right() {
-		this.setTranslationalVelocity(-0.5);
-		
-		this.setRotationalVelocity(-(Math.PI /4));
-
-	}
-	
-	private void rotate_left() {
-		this.setTranslationalVelocity(-0.5);
-		this.setRotationalVelocity(Math.PI /4);
-	}
 
 	@Override
 	protected void initBehavior() {
@@ -93,18 +81,21 @@ public class Robot extends Agent {
 		
 		if ((sonar.hasHit(0) && sonar.hasHit(1)) || (sonar.hasHit(7) && sonar.hasHit(0))) {
 		      // reads the three front quadrants
-		      double left = sonar.getFrontLeftQuadrantMeasurement();
-		      double right = sonar.getFrontRightQuadrantMeasurement();
+		      double front_left = sonar.getFrontLeftQuadrantMeasurement();
+		      double front_right = sonar.getFrontRightQuadrantMeasurement();
 		      double front = sonar.getFrontQuadrantMeasurement();
 		      // if obstacle near
-		      if ((front < 0.9) || (left < 0.9) || (right < 0.9)) {  
+		      if ((front < 0.9) || (front_left < 0.9) || (front_right < 0.9)) {  
+		    	
+		    	 
+		    	
 		    	camera.copyVisionImage(cameraimage);
 		    	
 		    	Color rgb = new Color (cameraimage.getRGB(50, 50));
 		    	System.out.println("The captured image has: RED: " + rgb.getRed() + " GREEN: " + rgb.getGreen() + " BLUE: " + rgb.getBlue() );
 		    	
 		    	
-		    	if (left < right) {
+		    	if (front_left < front_right) {
 		    		rotate_right();
 		    	}
 		    	else {
@@ -117,6 +108,7 @@ public class Robot extends Agent {
 		}else if(this.collisionDetected()) {
 			hit();
 			System.out.println("Collision");
+			//stays and rotates until it gets a way out!
 			for (int i=0; i<= 4; i++) {
 				if (bumper.hasHit(i)) {
 					rotate_right();
@@ -139,4 +131,20 @@ public class Robot extends Agent {
 		
 	
 	}
+
+	
+
+	private void rotate_right() {
+		// TODO Auto-generated method stub
+		this.setTranslationalVelocity(-0.5);
+		this.setRotationalVelocity(-(Math.PI /4));
+	}
+
+	private void rotate_left() {
+		// TODO Auto-generated method stub
+		this.setTranslationalVelocity(-0.5);
+		this.setRotationalVelocity(Math.PI /4);
+	}
+	
+	
 }

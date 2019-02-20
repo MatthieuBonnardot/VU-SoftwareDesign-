@@ -8,14 +8,12 @@ import simbad.sim.Agent;
 import simbad.sim.CameraSensor;
 import simbad.sim.RangeSensorBelt;
 import simbad.sim.RobotFactory;
-import simbad.sim.LightSensor;
 
 public class Robot extends Agent {
 	
 	RangeSensorBelt sonar;
 	RangeSensorBelt bumper;
 	CameraSensor camera;
-	LightSensor lightsensor;
 	
 	double translationalVelocity = 0.5;
 	double rotationalVelocity = 0;
@@ -30,7 +28,7 @@ public class Robot extends Agent {
         bumper = RobotFactory.addBumperBeltSensor(this, 8);
         // Add camera sensor
         camera = RobotFactory.addCameraSensor(this);
-        lightsensor = RobotFactory.addLightSensor(this);
+        
         
        
 	}
@@ -88,9 +86,6 @@ public class Robot extends Agent {
 		      double front = sonar.getFrontQuadrantMeasurement();
 		      // if obstacle near
 		      if ((front < 0.9) || (front_left < 0.9) || (front_right < 0.9)) {  
-		    	  
-		    	  
-		    	obstacle_recognition();
 		    	
 		    	 
 		    	
@@ -101,12 +96,10 @@ public class Robot extends Agent {
 		    	
 		    	
 		    	if (front_left < front_right) {
-		    		this.setTranslationalVelocity(-0.1);
-		    		this.setRotationalVelocity(-(Math.PI /8));
+		    		rotate_right();
 		    	}
 		    	else {
-		    		this.setTranslationalVelocity(-0.1);
-		    		this.setRotationalVelocity(Math.PI /8);
+		    		rotate_left();
 		    	}
 		      }
 		      else {
@@ -116,12 +109,19 @@ public class Robot extends Agent {
 			hit();
 			System.out.println("Collision");
 			//stays and rotates until it gets a way out!
-			this.setTranslationalVelocity(-1.0);
-			this.setRotationalVelocity(Math.PI /8);
+			for (int i=0; i<= 4; i++) {
+				if (bumper.hasHit(i)) {
+					rotate_right();
+				}
+			}
+			for (int i=5; i<= 8; i++) {
+				if (bumper.hasHit(i)) {
+					rotate_left();
+				}
+			}
 			
 		}else if (this.anOtherAgentIsVeryNear()){
-			this.setTranslationalVelocity(-1.0);
-			this.setRotationalVelocity(Math.PI /8);
+			rotate_right();
 			
 		}else {
 			//System.out.println("No Obstacles");
@@ -132,24 +132,18 @@ public class Robot extends Agent {
 	
 	}
 
-	private void obstacle_recognition() {
-		// TODO Auto-generated method stub
-		while(sonar.getFrontQuadrantMeasurement() > sonar.getFrontRightQuadrantHits()) {
-			rotate_left();
-			rotate_right();
-		}
-	}
+	
 
 	private void rotate_right() {
 		// TODO Auto-generated method stub
-		this.setTranslationalVelocity(-0.1);
-		this.setRotationalVelocity(-(Math.PI /8));
+		this.setTranslationalVelocity(-0.5);
+		this.setRotationalVelocity(-(Math.PI /4));
 	}
 
 	private void rotate_left() {
 		// TODO Auto-generated method stub
-		this.setTranslationalVelocity(-0.1);
-		this.setRotationalVelocity(Math.PI /8);
+		this.setTranslationalVelocity(-0.5);
+		this.setRotationalVelocity(Math.PI /4);
 	}
 	
 	

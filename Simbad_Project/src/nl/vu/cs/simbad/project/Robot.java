@@ -25,7 +25,7 @@ public class Robot extends Agent {
         // Add sonar sensor
         sonar = RobotFactory.addSonarBeltSensor(this, 8);
         // Add bumper sensor
-        bumper = RobotFactory.addBumperBeltSensor(this, 8);
+        bumper = RobotFactory.addBumperBeltSensor(this, 20);
         // Add camera sensor
         camera = RobotFactory.addCameraSensor(this);
         
@@ -79,7 +79,7 @@ public class Robot extends Agent {
 		distance();
 		BufferedImage cameraimage = camera.createCompatibleImage();
 		
-		if ((sonar.hasHit(0) && sonar.hasHit(1)) || (sonar.hasHit(7) && sonar.hasHit(0))) {
+		if ((sonar.hasHit(0) && sonar.hasHit(1)) || (sonar.hasHit(7) && sonar.hasHit(0)) || sonar.hasHit(0)) {
 		      // reads the three front quadrants
 		      double front_left = sonar.getFrontLeftQuadrantMeasurement();
 		      double front_right = sonar.getFrontRightQuadrantMeasurement();
@@ -109,16 +109,7 @@ public class Robot extends Agent {
 			hit();
 			System.out.println("Collision");
 			//stays and rotates until it gets a way out!
-			for (int i=0; i<= 4; i++) {
-				if (bumper.hasHit(i)) {
-					rotate_right();
-				}
-			}
-			for (int i=5; i<= 8; i++) {
-				if (bumper.hasHit(i)) {
-					rotate_left();
-				}
-			}
+			rotate_right();
 			
 		}else if (this.anOtherAgentIsVeryNear()){
 			rotate_right();
